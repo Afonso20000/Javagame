@@ -1,0 +1,8 @@
+# Compiled Java
+*.class
+
+# Personal save files (progress, saved run, reset backup)
+neonoverdrive_save*.properties
+
+# Screenshots written by the test programs
+testes/*/shots/
