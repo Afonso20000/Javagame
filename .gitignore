@@ -6,3 +6,7 @@ neonoverdrive_save*.properties
 
 # Screenshots written by the test programs
 testes/*/shots/
+neonswarm_highscore.txt
+
+# Old manual backup copies (git history replaces them)
+*_backup_*/
