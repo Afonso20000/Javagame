@@ -45,10 +45,12 @@ public class CurrencyCheck {
 
         // ---------- Spending ----------
         NeonOverdrive.GamePanel m = panel(1);
-        m.state = NeonOverdrive.State.HANGAR;
+        // Permanent upgrades are bought in the workshop.
+        m.state = NeonOverdrive.State.WORKSHOP;
         m.coins = 100;
         m.diamonds = 100;
         click(m, m.perkCard(0));
+        m.state = NeonOverdrive.State.HANGAR;
         check(m.perks[0] == 1 && m.coins == 60 && m.diamonds == 100, "permanent upgrades cost coins only");
         m.coins = 100000;
         m.diamonds = 9;

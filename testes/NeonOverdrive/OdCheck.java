@@ -142,7 +142,12 @@ public class OdCheck {
         m.handleKey(KeyEvent.VK_ENTER, true);
         check(m.state == NeonOverdrive.State.HANGAR, "ENTER on menu opens the hangar");
         m.coins = 500;
+        // Permanent upgrades are bought in the workshop, then back to the hangar.
+        click(m, m.workshopButton());
+        check(m.state == NeonOverdrive.State.WORKSHOP, "the workshop button opens the workshop");
         click(m, m.perkCard(0));
+        m.handleKey(KeyEvent.VK_ESCAPE, true);
+        check(m.state == NeonOverdrive.State.HANGAR, "ESC goes back to the hangar");
         m.noticeTimer = 0;
         shot(m, "02-hangar");
         check(m.perks[0] == 1 && m.coins == 460, "buying a perk costs coins");
@@ -334,7 +339,8 @@ public class OdCheck {
         check(sp.bombs == 0, "no bomb when you have none");
 
         // Elite and wave contents.
-        NeonOverdrive.GamePanel w = game(17);
+        // A seed whose wave 12 rolls ghosts (with the newer enemies in the mix, not every seed does).
+        NeonOverdrive.GamePanel w = game(2);
         w.wave = 11;
         w.invulnerable = 99;
         w.nextWave();
@@ -541,11 +547,14 @@ public class OdCheck {
         bh.update(DT);
         check(bh.health == 4, "standing in a beam hurts");
 
-        // Boss 4 cycles back, tougher.
+        // After all ten bosses the order cycles back, tougher.
         NeonOverdrive.GamePanel cy = game(29);
         cy.wave = 19;
         cy.nextWave();
-        check(cy.spawnQueue.get(0) == NeonOverdrive.EnemyType.OVERLORD, "wave 20 cycles back to the Overlord");
+        check(cy.spawnQueue.get(0) == NeonOverdrive.EnemyType.TEMPEST, "wave 20 brings the Tempest");
+        cy.wave = 54;
+        cy.nextWave();
+        check(cy.spawnQueue.get(0) == NeonOverdrive.EnemyType.OVERLORD, "wave 55 cycles back to the Overlord");
 
         // Themes change every 5 waves.
         NeonOverdrive.GamePanel th = game(30);
